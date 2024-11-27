@@ -1,4 +1,4 @@
-package com.spring.h2.SpringBootH2;
+package com.spring.h2.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
