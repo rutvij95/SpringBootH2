@@ -1,25 +1,57 @@
 package com.spring.h2.api.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Table(name = "theaters")
 public class Theater {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long theaterId;
+    private Long id;
+
+    @Column(nullable = false)
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "city_name_id", nullable = false)
-    // This city_name_id is not dependent on anything. This is telling what should be name of Column in Theater.
-    private City city; //In City object Mapped by name should be same as this object Name;
+    @Column(nullable = false)
+    private String address;
 
-    @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Show> showList = new ArrayList<>();
+    @Column
+    private String phone;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id", nullable = false)
+    private City city;
+
+    @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Screen> screens;
+
+    public Theater() {}
+
+    public Theater(String name, String address, String phone, City city) {
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.city = city;
+    }
+
+    // Getters and setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
+
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+
+    public City getCity() { return city; }
+    public void setCity(City city) { this.city = city; }
+
+    public List<Screen> getScreens() { return screens; }
+    public void setScreens(List<Screen> screens) { this.screens = screens; }
 }
